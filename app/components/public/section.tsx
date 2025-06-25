@@ -11,7 +11,7 @@ const Section = ({children, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivE
 
 const SectionContent = ({children, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) => {
   return (
-    <div className={cn('container flex flex-col mx-auto space-y-8 xl:space-y-12', props.className)}>
+    <div className={cn('container flex flex-col mx-auto space-y-8 xl:space-y-12 px-4 xl:px-0', props.className)}>
       {children}
     </div>
   )
@@ -19,9 +19,15 @@ const SectionContent = ({children, ...props}: PropsWithChildren<HTMLAttributes<H
 
 const SectionTitle = ({title, small, ...props}: PropsWithoutRef<React.HTMLAttributes<HTMLDivElement>> & { title: string; small: string; }) => {
   return (
-    <article className={cn('uppercase text-center leading-none text-muted-foreground', props.className)}>
-      <small className="text-xs font-sans font-medium tracking-tight opacity-75">{small}</small>
-      <h1 className="text-sm font-sans font-bold">{title}</h1>
+    <article className={cn('uppercase flex items-center justify-center text-center leading-none text-muted-foreground gap-8 xl:gap-12 px-4 xl:px-72', props.className)}>
+      <hr className="grow h-px"/>
+
+      <div className="shrink">
+        <small className="text-xs font-sans font-medium tracking-tight text-nowrap opacity-75">{small}</small>
+        <h1 className="text-sm font-sans font-bold text-nowrap">{title}</h1>
+      </div>
+
+      <hr className="grow h-px"/>
     </article>
   )
 }

@@ -4,9 +4,9 @@ import {Section, SectionContent, SectionTitle} from "~/components/public/section
 
 const ServicesSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTMLDivElement>>) => {
   const records = [
-    {cover: 'https://picsum.photos/id/292/500/500', title: 'Torneiro Mecânico'},
-    {cover: 'https://picsum.photos/id/367/500/500', title: 'Torneiro Mecânico'},
-    {cover: 'https://picsum.photos/id/787/500/500', title: 'Torneiro Mecânico'},
+    {cover: 'https://picsum.photos/id/292/800/800', title: 'Torneiro Mecânico'},
+    {cover: 'https://picsum.photos/id/367/800/800', title: 'Torneiro Mecânico'},
+    {cover: 'https://picsum.photos/id/787/800/800', title: 'Torneiro Mecânico'},
   ];
 
   return (

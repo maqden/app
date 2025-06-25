@@ -155,11 +155,11 @@
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border outline-ring/50 no-scrollbar;
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground no-scrollbar;
     }
 }
 
@@ -169,4 +169,13 @@
 
 @utility clickable {
     @apply hover:cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-none;
+}
+
+@utility no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
