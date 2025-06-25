@@ -11,7 +11,7 @@ const Section = ({children, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivE
 
 const SectionContent = ({children, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) => {
   return (
-    <div className={cn('container flex flex-col mx-auto space-y-8 xl:space-y-16', props.className)}>
+    <div className={cn('container flex flex-col mx-auto space-y-8 xl:space-y-12', props.className)}>
       {children}
     </div>
   )
