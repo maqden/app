@@ -5,6 +5,9 @@
 
 @theme inline {
     --font-brand: 'Poetsen One', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-hero: 'Fira Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-title: 'Oswald', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -160,24 +163,10 @@
     }
 }
 
-@layer components {
-    .public-section {
-        @apply flex flex-col py-32;
+@utility space {
+    @apply gap-8 max-lg:gap-4;
+}
 
-        .content {
-            @apply container mx-auto space-y-12 max-lg:px-4;
-        }
-
-        .title {
-            @apply uppercase text-center leading-none;
-
-            h1 {
-                @apply text-muted-foreground text-lg font-bold;
-            }
-
-            small {
-                @apply text-muted-foreground text-sm;
-            }
-        }
-    }
+@utility clickable {
+    @apply hover:cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-none;
 }

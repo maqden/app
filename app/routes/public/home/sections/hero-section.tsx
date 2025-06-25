@@ -1,11 +1,14 @@
 import React, {type PropsWithoutRef} from "react";
+import {Section, SectionContent} from "~/components/public/section";
 import {cn} from "~/lib/utils";
 
 const HeroSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTMLDivElement>>) => {
   return (
-    <section className={cn('public-section items-center justify-center h-[76vh] max-lg:h-[46vh]', props.className)}>
-      Hero Section
-    </section>
+    <Section>
+      <SectionContent className={cn('items-center justify-center', props.className)}>
+        <h1>Hero Section</h1>
+      </SectionContent>
+    </Section>
   )
 }
 export default HeroSection
