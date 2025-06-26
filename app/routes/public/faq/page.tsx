@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <Section className="!pt-0">
+      <Section className="!pt-4">
         <SectionContent className="flex flex-col items-center justify-center">
           <div className="text-center mx-auto max-w-4xl space-y-4 pt-0 xl:space-y-8">
             <div className="space-y-2">
@@ -47,40 +47,42 @@ export default function Page() {
       <NewsletterSection className="bg-accent text-accent-foreground"/>
 
       <Section>
-        <SectionContent className="flex items-center justify-center">
-          <div className="grow">
-            <article className="space-y-2">
-              <h2 className="font-title text-3xl leading-tight font-bold tracking-tight xl:text-3xl">Ainda ficou com dúvida?</h2>
-              <p className="text-muted-foreground leading-relaxed font-bold">Preencha as informações abaixo para entrar em contato diretamente com nossa equipe de suporte!</p>
-            </article>
+        <SectionContent className="flex-row justify-center space">
+          <div className="flex items-center justify-center px-4 space-y-8 basis-full xl:basis-1/2 lg:space-x-8">
+            <div className="grow max-w-md space-y-4 xl:space-y-8">
+              <article className="space-y-2">
+                <h2 className="font-title text-3xl leading-tight font-bold tracking-tight xl:text-3xl">Ainda ficou com dúvida?</h2>
+                <p className="text-muted-foreground leading-relaxed font-bold">Preencha as informações abaixo para entrar em contato diretamente com nossa equipe de suporte!</p>
+              </article>
 
-            <form className="space-y-4">
-              <div>
-                <Label children="Nome"/>
-                <Input tabIndex={1} placeholder="Nome completo"/>
-              </div>
+              <form className="space-y-4">
+                <div className="space-y-2">
+                  <Label children="Nome"/>
+                  <Input tabIndex={1} placeholder="Nome completo"/>
+                </div>
 
-              <div>
-                <Label children="Endereço de Email"/>
-                <Input tabIndex={2} placeholder="email@dominio.com.br"/>
-              </div>
+                <div>
+                  <Label children="Endereço de Email"/>
+                  <Input tabIndex={2} placeholder="email@dominio.com.br"/>
+                </div>
 
-              <div>
-                <Label children="Mensagem"/>
-                <Textarea tabIndex={3} placeholder="Qual a sua dúvida?"/>
-              </div>
+                <div>
+                  <Label children="Mensagem"/>
+                  <Textarea tabIndex={3} placeholder="Qual a sua dúvida?"/>
+                </div>
 
-              <div className="pt-4">
-                <Button className="w-full" tabIndex={4}>
-                  Enviar minha dúvida
-                </Button>
-              </div>
-            </form>
+                <div className="pt-4">
+                  <Button className="w-full" tabIndex={4}>
+                    Enviar minha dúvida
+                  </Button>
+                </div>
+              </form>
 
-            <p className="text-muted-foreground py-1 text-center text-sm">Qualquer envio de spam por este canal será descartado.</p>
+              <p className="text-muted-foreground py-1 text-center text-sm">Qualquer envio de spam por este canal será descartado.</p>
+            </div>
           </div>
 
-          <div className="grow relative aspect-square overflow-hidden rounded-3xl max-lg:hidden">
+          <div className="hidden relative aspect-square overflow-hidden rounded-3xl basis-1/2 lg:block">
             <img src="/images/contact.jpg" className="h-full w-full rounded-md object-cover" alt="Imagem ilustrativa de uma máquina industrial."/>
           </div>
         </SectionContent>
@@ -88,3 +90,16 @@ export default function Page() {
     </>
   );
 }
+
+
+// <Section>
+//   <SectionContent className="flex flex-row items-center justify-center">
+//     <div className="basis-1/2 px-32 space-y-8 lg:space-x-8">
+
+//     </div>
+//
+//     <div className="hidden  lg:block">
+//
+//     </div>
+//   </SectionContent>
+// </Section>

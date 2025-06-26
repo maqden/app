@@ -3,12 +3,18 @@ import {Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTi
 import {AlignRight} from "lucide-react";
 import Brand from "~/components/ui/brand";
 import Navigation from "~/components/ui/navigation";
+import {Button} from "~/components/ui/button";
 
 const Menu = () => {
+  const [open, setOpen] = React.useState(false)
+
+
   return (
-    <Sheet>
-      <SheetTrigger className="cursor-pointer clickable">
-        <AlignRight className="size-8 xl:size-12" />
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger className="cursor-pointer clickable" asChild>
+        <Button variant="ghost">
+          <AlignRight className="size-8 xl:size-12" />
+        </Button>
       </SheetTrigger>
 
       <SheetContent side="left" className="w-full max-w-[calc(100vw-2rem)] md:max-w-md">
@@ -21,7 +27,7 @@ const Menu = () => {
         </SheetHeader>
 
         <div className="grow flex items-center justify-center p-8">
-          <Navigation />
+          <Navigation setState={setOpen} />
         </div>
 
         <SheetFooter>
