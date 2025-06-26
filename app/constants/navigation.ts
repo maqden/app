@@ -7,7 +7,7 @@ const items = [
     items: [
       {label: 'Página Inicial', href: '/', icon: Home},
       {label: 'Preços', href: '/precos', icon: ListTodo},
-      {label: 'Dúvidas Frequentes', href: '/faq', icon: MessageCircleQuestion},
+      {label: 'Dúvidas Frequentes', href: '/perguntas-frequentes', icon: MessageCircleQuestion},
     ],
   },
   {
