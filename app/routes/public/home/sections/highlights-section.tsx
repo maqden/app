@@ -23,6 +23,7 @@ const HighlightsSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTML
               src={record.cover}
               alt={record.title}
               caption={record.description}
+              target="/account/product-or-service"
               className={`${index < 2 ? 'col-span-6' : 'col-span-4'} max-xl:col-span-12`}
             />
           ))}

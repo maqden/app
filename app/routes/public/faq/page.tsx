@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <Section className="!pt-4">
+      <Section className="!pt-16">
         <SectionContent className="flex flex-col items-center justify-center">
           <div className="text-center mx-auto max-w-4xl space-y-4 pt-0 xl:space-y-8">
             <div className="space-y-2">
@@ -90,16 +90,3 @@ export default function Page() {
     </>
   );
 }
-
-
-// <Section>
-//   <SectionContent className="flex flex-row items-center justify-center">
-//     <div className="basis-1/2 px-32 space-y-8 lg:space-x-8">
-
-//     </div>
-//
-//     <div className="hidden  lg:block">
-//
-//     </div>
-//   </SectionContent>
-// </Section>

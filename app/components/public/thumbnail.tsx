@@ -2,9 +2,9 @@ import React, {type PropsWithoutRef} from "react";
 import {cn} from "~/lib/utils";
 import {Link} from "react-router";
 
-const Thumbnail = ({caption, link, ...props}: PropsWithoutRef<React.ImgHTMLAttributes<HTMLImageElement>> & { caption?: string; link?: string }) => {
+const Thumbnail = ({caption, target, ...props}: PropsWithoutRef<React.ImgHTMLAttributes<HTMLImageElement>> & { caption?: string; target?: string }) => {
   return (
-    <Link to={link || '/'} className={cn('group relative overflow-hidden cursor-pointer shadow-lg rounded-3xl', props.className)} rel="noopener noreferrer">
+    <Link to={target || '/'} className={cn('group relative overflow-hidden cursor-pointer shadow-lg rounded-3xl', props.className)} rel="noopener noreferrer">
       <figure>
         <img loading="lazy" {...props} alt={props.alt} className={cn('aspect-video object-cover overflow-hidden transform transition-all duration-150 group-hover:scale-105', props.className)} />
 

@@ -1,10 +1,17 @@
-import {index, layout, prefix, route, type RouteConfig} from "@react-router/dev/routes";
+import {index, layout, route, type RouteConfig} from "@react-router/dev/routes";
 
 export default [
+  layout('routes/auth/layout.tsx', [
+    route('acessar-conta', 'routes/auth/login/page.tsx'),
+    route('criar-conta', 'routes/auth/register/page.tsx'),
+  ]),
+
   layout('routes/public/layout.tsx', [
     index('routes/public/home/page.tsx'),
+    route('precos', 'routes/public/prices/page.tsx'),
     route('perguntas-frequentes', 'routes/public/faq/page.tsx'),
   ]),
+
 
   // route('painel', 'routes/protected/layout.tsx', [
   //   index('routes/protected/home/page.tsx'),

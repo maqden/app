@@ -4,7 +4,7 @@ import {AlignRight} from "lucide-react";
 import Brand from "~/components/ui/brand";
 import Navigation from "~/components/ui/navigation";
 
-const Menu = () => {
+const Aside = () => {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -34,4 +34,4 @@ const Menu = () => {
   )
 }
 
-export default Menu
+export default Aside

@@ -6,7 +6,7 @@ const items = [
     title: 'WebSite',
     items: [
       {label: 'Página Inicial', href: '/', icon: Home},
-      {label: 'Preços', href: '/precos', icon: ListTodo},
+      {label: 'Planos & Preços', href: '/precos', icon: ListTodo},
       {label: 'Dúvidas Frequentes', href: '/perguntas-frequentes', icon: MessageCircleQuestion},
     ],
   },

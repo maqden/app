@@ -186,11 +186,25 @@
     @apply hover:cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-none;
 }
 
+@utility link {
+    @apply clickable text-primary font-semibold text-nowrap hover:underline hover:underline-offset-2 hover:brightness-105;
+}
+
 @utility no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+
+.auth {
+    .title {
+        @apply line-clamp-1 text-2xl font-bold;
+    }
+
+    .sub-title {
+        @apply text-sm opacity-65;
     }
 }

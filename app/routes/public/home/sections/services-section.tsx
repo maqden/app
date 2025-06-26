@@ -16,7 +16,7 @@ const ServicesSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTMLDi
 
         <div className="grid grid-cols-3 space max-lg:grid-cols-1">
           {records.map((record, index) => (
-            <Thumbnail key={index} src={record.cover} alt={record.title} className="aspect-square"/>
+            <Thumbnail key={index} src={record.cover} alt={record.title} target="/account/product-or-service" className="aspect-square"/>
           ))}
         </div>
       </SectionContent>

@@ -25,6 +25,7 @@ const PopularSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTMLDiv
               key={index}
               src={record.cover}
               alt={record.title}
+              target="/account/product-or-service"
               caption={record.description}
             />
           ))}

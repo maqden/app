@@ -2,7 +2,7 @@ import {Outlet} from "react-router";
 import {cn} from "~/lib/utils";
 import {useStickyHeader} from "~/hooks/use-sticky-header";
 import Brand from "~/components/ui/brand";
-import Menu from "~/components/public/menu";
+import Aside from "~/components/public/aside";
 
 const Layout = () => {
   const {showHeader, scrolled} = useStickyHeader(50);
@@ -21,7 +21,7 @@ const Layout = () => {
       >
         <div className="container flex items-center justify-between mx-auto p-4 xl:px-0 xl:py-8">
           <Brand className="text-4xl xl:text-6xl"/>
-          <Menu/>
+          <Aside/>
         </div>
       </header>
 
