@@ -13,7 +13,7 @@ const NewsletterSection = ({...props}: PropsWithoutRef<React.HTMLAttributes<HTML
           <div className="mx-auto w-full max-w-xl space-y-4">
             <div className="flex flex-col items-start justify-start gap-1">
               <div className="bg-input flex w-full items-center gap-2 rounded-lg px-2">
-                <Input placeholder="email@dominio.com.br" className="h-18 w-full border-none font-bold bg-transparent px-4 focus:outline-none placeholder:text-muted-foreground/50" />
+                <Input placeholder="email@dominio.com.br" className="h-18 w-full border-none font-bold bg-transparent px-4 focus:outline-none placeholder:text-muted-foreground/50"/>
                 <Button variant="default" className="h-14 px-6 font-bold">
                   <span>Receber</span>
                   <span className="max-lg:hidden">Notificações</span>

@@ -6,7 +6,7 @@ const Layout = () => {
     <div className="flex h-screen p-4 xl:p-8">
       <div className="flex flex-col items-center justify-center basis-full xl:basis-1/2">
         <div className="flex flex-col items-start space w-full max-w-md">
-          <Brand className="text-5xl xl:text-7xl"/>
+          <Brand className="text-4xl xl:text-6xl"/>
 
           <div className="auth">
             <Outlet/>

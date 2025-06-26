@@ -1,38 +1,38 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 export function useStickyHeader(threshold = 30, delay = 10) {
-    const [showHeader, setShowHeader] = useState(true);
-    const [scrolled, setScrolled] = useState(false);
-    const [lastScrollY, setLastScrollY] = useState(0);
-    const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [showHeader, setShowHeader] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-            setScrolled(currentScrollY > threshold);
+      setScrolled(currentScrollY > threshold);
 
-            if (scrollTimeout) clearTimeout(scrollTimeout);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
 
-            const timeout = setTimeout(() => {
-                if (currentScrollY < lastScrollY || currentScrollY < threshold) {
-                    setShowHeader(true);
-                } else {
-                    setShowHeader(false);
-                }
-                setLastScrollY(currentScrollY);
-            }, delay);
+      const timeout = setTimeout(() => {
+        if (currentScrollY < lastScrollY || currentScrollY < threshold) {
+          setShowHeader(true);
+        } else {
+          setShowHeader(false);
+        }
+        setLastScrollY(currentScrollY);
+      }, delay);
 
-            setScrollTimeout(timeout);
-        };
+      setScrollTimeout(timeout);
+    };
 
-        window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (scrollTimeout) clearTimeout(scrollTimeout);
-        };
-    }, [lastScrollY, threshold, delay, scrollTimeout]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, [lastScrollY, threshold, delay, scrollTimeout]);
 
-    return { showHeader, scrolled };
+  return {showHeader, scrolled};
 }

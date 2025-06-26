@@ -35,7 +35,7 @@ const Price = ({price}: { price: { name: string; amount: number; settings: { pop
         </div>
 
         <div>
-          <Button className="w-full" variant="outline">Assinar</Button>
+          <Button className="w-full" variant="outline">Assinar Plano</Button>
         </div>
       </CardContent>
     </Card>

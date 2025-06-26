@@ -17,7 +17,7 @@ export default function Page() {
         </p>
 
         <p className="space-x-1 text-center text-xs">
-          * ao se registrar em nossa plataforma, você estará automaticamente concordando com nossos <Link to="/termos-de-uso" className="link">termos de uso.</Link>
+          * ao acessar nossa plataforma, você estará automaticamente concordando com nossos <Link to="/termos-de-uso" className="link">termos de uso.</Link>
         </p>
       </div>
     </div>
