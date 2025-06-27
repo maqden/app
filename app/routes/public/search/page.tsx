@@ -1,7 +1,6 @@
 import type {Route} from "./+types/page";
 import React, {useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router";
-
 import {Section, SectionContent} from "~/components/public/section";
 import InputSearch from "~/components/public/input-search";
 import Thumbnail from "~/components/public/thumbnail";
