@@ -10,7 +10,7 @@ const Aside = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="cursor-pointer clickable" asChild>
-        <AlignRight className="size-8 xl:size-12" />
+        <AlignRight className="size-10 xl:size-12" />
       </SheetTrigger>
 
       <SheetContent side="left" className="w-full max-w-[calc(100vw-2rem)] md:max-w-md">

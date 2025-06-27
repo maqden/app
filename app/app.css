@@ -180,6 +180,13 @@
     body {
         @apply bg-background text-foreground no-scrollbar;
     }
+
+    @media (min-width: 3840px) {
+        html {
+            font-size: 32px;
+        }
+    }
+
 }
 
 @utility space {

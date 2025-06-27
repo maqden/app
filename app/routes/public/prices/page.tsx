@@ -1,9 +1,10 @@
 import {Section, SectionContent} from "~/components/public/section";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "~/components/ui/tabs"
-import Price from "~/routes/public/prices/widgets/price";
+import Price from "~/components/public/price";
+import type { Route } from "./+types/page";
 
-export default function Page() {
-  const prices = {
+export async function loader() {
+  return {
     products: [
       {name: 'Básico', description: 'O Plano Básico é perfeito para quem deseja anúnciar sua máquina de forma prática e eficiente.', amount: 4990, order: 1, features: ['1 Anúncio', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
       {name: 'Revenda', description: 'O Plano Revenda é perfeito para quem deseja anunciar até 50 máquinas.', amount: 9990, order: 2, features: ['Até 50 anúncios', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: true}},
@@ -15,7 +16,9 @@ export default function Page() {
       {name: 'Ilimitado', description: 'O Plano ilimitado é perfeito para quem tem presta um alto número de serviços para o público.', amount: 8990, order: 3, features: ['Anúncios ilimitados', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
     ],
   };
+}
 
+export default function Page({loaderData}: Route.ComponentProps) {
   return (
     <Section className="!pt-16">
       <SectionContent className="flex flex-col items-center justify-center">
@@ -35,10 +38,10 @@ export default function Page() {
           </TabsList>
 
           <TabsContent value="product" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {prices.products.map((product, i) => <Price price={product} key={`product-price-${i}`}/>)}
+            {loaderData.products.map((product, i) => <Price price={product} key={`product-price-${i}`}/>)}
           </TabsContent>
           <TabsContent value="service" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {prices.services.map((service, i) => <Price price={service} key={`service-price-${i}`}/>)}
+            {loaderData.services.map((service, i) => <Price price={service} key={`service-price-${i}`}/>)}
           </TabsContent>
         </Tabs>
 

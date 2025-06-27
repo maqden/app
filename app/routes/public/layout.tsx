@@ -16,11 +16,11 @@ const Layout = () => {
         className={cn('sticky top-0 z-40 transition-all duration-500', {
           'translate-y-0': showHeader,
           '-translate-y-full': !showHeader,
-          'backdrop-blur backdrop-brightness-110': scrolled,
+          'backdrop-blur backdrop-brightness-115': scrolled,
         })}
       >
         <div className="container flex items-center justify-between mx-auto p-4 xl:px-0 xl:py-8">
-          <Brand className="text-4xl xl:text-6xl"/>
+          <Brand className="text-5xl xl:text-6xl"/>
           <Aside/>
         </div>
       </header>

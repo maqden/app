@@ -21,16 +21,12 @@ const Navigation = ({setState, ...props}: PropsWithoutRef<React.HTMLAttributes<H
 
             <div className="flex flex-col w-full gap-2">
               {group.items.map((item, i) => (
-                <NavLink key={`item:${i}`} to={item.href} onClick={() => setState(false)}>
-                  {({isActive}) => (
-                    <div className={cn('group uppercase flex items-center rounded-lg text-sm font-bold h-14 px-4 gap-2', {
-                      'bg-primary text-primary-foreground cursor-default': isActive,
-                      'clickable text-muted-foreground hover:bg-primary/10': !isActive,
-                    })}>
-                      {item.icon && <item.icon className="size-6 stroke-2"/>}
-                      {item.label && <span className="transform leading-none text-nowrap transition-all duration-300 group-hover:translate-x-2">{item.label}</span>}
-                    </div>
-                  )}
+                <NavLink key={`item:${i}`} to={item.href} onClick={() => setState(false)} className={({isActive}) => cn('group uppercase flex items-center rounded-lg text-sm font-bold h-14 px-4 gap-2', {
+                  'bg-primary text-primary-foreground cursor-default': isActive,
+                  'clickable text-muted-foreground hover:bg-primary/10': !isActive,
+                })}>
+                  {item.icon && <item.icon className="size-6 stroke-2"/>}
+                  {item.label && <span className="transform leading-none text-nowrap transition-all duration-300 group-hover:translate-x-2">{item.label}</span>}
                 </NavLink>
               ))}
             </div>
