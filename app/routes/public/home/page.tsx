@@ -13,10 +13,10 @@ import {getMostSearched} from "~/data/search";
 
 export async function loader() {
   return {
-    highlights: await getHighlights(),
     populars: await getPopulars(),
     services: await getServices(),
-    searched: await getMostSearched()
+    highlights: await getHighlights(),
+    searched: await getMostSearched(),
   };
 }
 
