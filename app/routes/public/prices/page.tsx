@@ -1,7 +1,7 @@
 import {Section, SectionContent} from "~/components/public/section";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "~/components/ui/tabs"
 import Price from "~/components/public/price";
-import type { Route } from "./+types/page";
+import type {Route} from "./+types/page";
 
 export async function loader() {
   return {
@@ -44,7 +44,6 @@ export default function Page({loaderData}: Route.ComponentProps) {
             {loaderData.services.map((service, i) => <Price price={service} key={`service-price-${i}`}/>)}
           </TabsContent>
         </Tabs>
-
 
         <p className="inline-flex items-center text-muted-foreground text-sm gap-1">Assinaturas gerenciadas por:
           <a href="https://www.stripe.com" target="_blank">

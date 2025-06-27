@@ -6,7 +6,6 @@ import Thumbnail from "~/components/public/thumbnail";
 import InputSearch from "~/components/public/input-search";
 import {Link, useNavigate, useSearchParams} from "react-router";
 import {Divider} from "~/components/ui/divider";
-import {cn} from "~/lib/utils";
 import {Search} from "lucide-react";
 
 export async function loader() {
@@ -58,15 +57,15 @@ export default function Page({loaderData}: Route.ComponentProps) {
           </div>
 
           <div className="w-full max-w-xl space-y-4">
-            <InputSearch />
+            <InputSearch/>
 
             <div className="mx-auto space-y-2">
-              <Divider text="mais buscados" className="mx-auto max-w-1/3 text-nowrap max-lg:max-w-1/2" />
+              <Divider text="mais buscados" className="mx-auto max-w-1/3 text-nowrap max-lg:max-w-1/2"/>
 
               <div className="flex items-center justify-center gap-2">
                 {loaderData.tags?.map((text) => (
                   <Link to={`/pesquisar?q=${encodeURIComponent(text)}`} key={`tag=${text}`} className="clickable bg-input text-input-foreground item-center flex max-w-fit justify-center gap-1 rounded-xs pl-2 pr-3 py-1 hover:brightness-75">
-                    <Search className="size-3 leading-none" />
+                    <Search className="size-3 leading-none"/>
                     <span className="text-xs leading-none">{text}</span>
                   </Link>
                 ))}

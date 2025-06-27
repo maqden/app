@@ -43,14 +43,14 @@ function useSidebar() {
 }
 
 function SidebarProvider({
-  defaultOpen = true,
-  open: openProp,
-  onOpenChange: setOpenProp,
-  className,
-  style,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
+                           defaultOpen = true,
+                           open: openProp,
+                           onOpenChange: setOpenProp,
+                           className,
+                           style,
+                           children,
+                           ...props
+                         }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void

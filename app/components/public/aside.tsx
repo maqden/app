@@ -10,20 +10,20 @@ const Aside = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="cursor-pointer clickable" asChild>
-        <AlignRight className="size-10 xl:size-12" />
+        <AlignRight className="size-10 xl:size-12"/>
       </SheetTrigger>
 
       <SheetContent side="left" className="w-full max-w-[calc(100vw-2rem)] md:max-w-md">
         <SheetHeader>
           <SheetTitle className="flex items-center justify-start">
-            <Brand className="text-4xl xl:text-6xl font-light" />
+            <Brand className="text-4xl xl:text-6xl font-light"/>
           </SheetTitle>
 
-          <SheetDescription className="hidden" />
+          <SheetDescription className="hidden"/>
         </SheetHeader>
 
         <div className="grow flex items-center justify-center p-8">
-          <Navigation setState={setOpen} />
+          <Navigation setState={setOpen}/>
         </div>
 
         <SheetFooter>

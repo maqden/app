@@ -1,6 +1,3 @@
-import {Link} from "react-router";
-import {Label} from "~/components/ui/label";
-import {Input} from "~/components/ui/input";
 import {Button} from "~/components/ui/button";
 import React from "react";
 

@@ -2,7 +2,7 @@ import "./app.css";
 
 import React from "react";
 import type {Route} from "./+types/root";
-import {isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration,} from "react-router";
+import {isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration,} from "react-router";
 
 export const links: Route.LinksFunction = () => [
   {rel: "preconnect", href: "https://fonts.googleapis.com"},
@@ -42,21 +42,22 @@ export function ErrorBoundary({error}: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Erro";
-    details = error.status === 404 ? "A página solicitada não pode ser encontrada." : error.statusText || details;
+    details = error.status === 404 ? "A página não encontrada." : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="flex flex-col items-center justify-center h-screen gap-4">
+      <div className="text-center space-y-8">
+        <div className="leading-relaxed space-y-4">
+          <h1 className="font-title text-9xl">{message}</h1>
+          <p className="text-lg">{details}</p>
+        </div>
+        <Link to="/" className="link">Voltar para a página inicial</Link>
+        {stack && (<pre className="w-full text-start  py-12 overflow-x-auto"><code>{stack}</code></pre>)}
+      </div>
     </main>
   );
 }
