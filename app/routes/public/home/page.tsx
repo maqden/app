@@ -7,30 +7,42 @@ import InputSearch from "~/components/public/input-search";
 import {Link, useNavigate, useSearchParams} from "react-router";
 import {Divider} from "~/components/ui/divider";
 import {Search} from "lucide-react";
-import {getHighlights, getPopulars} from "~/data/products";
-import {getServices} from "~/data/services";
-import {getMostSearched} from "~/data/search";
+import axios from "~/lib/axios";
+import type {Thumbnail as Type} from "~/models";
+import {useDebouncedCallback} from "use-debounce";
 
 export async function loader() {
-  return {
-    searched: await getMostSearched(),
-    highlights: await getHighlights(),
-    populars: await getPopulars(),
-    services: await getServices(),
-  };
+  let highlights = await new Promise<{ data: Type[] }>(
+    (res) => res(axios.get<Type[]>('/products?limit=5&order=random'))
+  );
+
+  let populars = await new Promise<{ data: Type[] }>(
+    (res) => res(axios.get<Type[]>('/products?limit=8&order=random'))
+  );
+
+  let services = await new Promise<{ data: Type[] }>(
+    (res) => res(axios.get<Type[]>('/services?limit=3&order=random'))
+  );
+
+  return {highlights, populars, services};
 }
 
 export default function Page({loaderData}: Route.ComponentProps) {
+  let {highlights, populars, services} = loaderData;
+
   const navigate = useNavigate();
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const searched = ['torno', 'furadeira', 'maqden', 'mecanico'];
+
+  const debouncedSearch = useDebouncedCallback((value) => navigate(`/pesquisar?q=${encodeURIComponent(value)}`), 500);
 
   useEffect(() => {
-    let query = searchParams.get('q') ?? '';
+    const q = searchParams.get('q') || '';
 
-    if (query) {
-      navigate(`/pesquisar?q=${encodeURIComponent(query)}`);
+    if (q) {
+      debouncedSearch(q);
     }
-  }, [searchParams]);
+  }, [searchParams, debouncedSearch]);
 
   return (
     <>
@@ -47,16 +59,15 @@ export default function Page({loaderData}: Route.ComponentProps) {
               <Divider text="mais buscados" className="mx-auto max-w-1/3 text-nowrap max-lg:max-w-1/2"/>
 
               <div className="flex items-center justify-center gap-2">
-                {loaderData.searched.map((tag) => (
-                  <Link to={`/pesquisar?q=${encodeURIComponent(tag.name)}`} key={`tag=${tag.name}`} className="clickable bg-input text-input-foreground item-center flex max-w-fit justify-center gap-1 rounded-xs pl-2 pr-3 py-1 hover:brightness-75">
+                {searched.map((text) => (
+                  <Link to={`/pesquisar?q=${encodeURIComponent(text)}`} key={`tag=${text}`} className="clickable bg-input text-input-foreground item-center flex max-w-fit justify-center gap-1 rounded-xs pl-2 pr-3 py-1 hover:brightness-75">
                     <Search className="size-3 leading-none"/>
-                    <span className="text-xs leading-none">{tag.name}</span>
+                    <span className="text-xs leading-none">{text}</span>
                   </Link>
                 ))}
               </div>
             </div>
           </div>
-
         </SectionContent>
       </Section>
 
@@ -65,14 +76,14 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Destaques" title="Os mais acessados da semana"/>
 
           <div className="grid space grid-cols-12">
-            {loaderData.highlights.map((record, index) => (
+            {highlights?.data.map((record: Type, i) => (
               <Thumbnail
-                key={index}
+                key={i}
                 src={record.cover}
                 alt={record.title}
                 target={record.target}
                 caption={record.description}
-                className={`${index < 2 ? 'col-span-6' : 'col-span-4'} max-xl:col-span-12`}
+                className={`${i < 2 ? 'col-span-6' : 'col-span-4'} max-xl:col-span-12`}
               />
             ))}
           </div>
@@ -84,9 +95,9 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Populares" title="Os mais acessados da semana"/>
 
           <div className="grid space grid-cols-4 max-xl:grid-cols-1">
-            {loaderData.populars.map((record, index) => (
+            {populars?.data.map((record: Type, i) => (
               <Thumbnail
-                key={index}
+                key={i}
                 src={record.cover}
                 alt={record.title}
                 target={record.target}
@@ -104,8 +115,8 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Serviços" title="Encontre Profissionais"/>
 
           <div className="grid grid-cols-3 space max-lg:grid-cols-1">
-            {loaderData.services.map((record, index) => (
-              <Thumbnail key={index} src={record.cover} alt={record.title} target={record.target} className="aspect-square"/>
+            {services?.data.map((record: Type, i) => (
+              <Thumbnail key={i} src={record.cover} alt={record.title} target={record.target} className="aspect-square"/>
             ))}
           </div>
         </SectionContent>
