@@ -4,13 +4,14 @@ import {useNavigate, useSearchParams} from "react-router";
 import {Section, SectionContent} from "~/components/public/section";
 import InputSearch from "~/components/public/input-search";
 import Thumbnail from "~/components/public/thumbnail";
+import type {Thumbnail as Type} from "~/models";
 import axios from "~/lib/axios";
 
 export async function loader({request}: Route.LoaderArgs) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q') ?? '';
 
-  const results = await axios.get(`/search?q=${encodeURIComponent(query)}`);
+  const results = await axios.get<Type[]>(`/search?q=${encodeURIComponent(query)}`);
 
   return results.data;
 }
@@ -38,8 +39,15 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <h1 className="text-center text-lg">Resultados de pesquisa para: <b className="text-primary brightness-75">{searchParams.get('q') ?? ''}</b></h1>
 
           <div className="grid grid-cols-3 space max-lg:grid-cols-1">
-            {loaderData?.map((record: { cover: string; title: string; description: string }, i: number) => (
-              <Thumbnail key={i} src={record.cover} alt={record.title} caption={record.description} target="/account/product-or-service" className="aspect-video"/>
+            {loaderData?.map((record, i) => (
+              <Thumbnail
+                key={i}
+                src={record.cover}
+                alt={record.title}
+                target={record.target}
+                caption={record.description}
+                className="aspect-video"
+              />
             ))}
           </div>
         </div>

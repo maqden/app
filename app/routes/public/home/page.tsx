@@ -12,43 +12,31 @@ import type {Thumbnail as Type} from "~/models";
 import {useDebouncedCallback} from "use-debounce";
 
 export async function loader() {
-  let highlights = await new Promise<{ data: Type[] }>(
-    (res) => res(axios.get<Type[]>('/products?limit=5&order=random'))
-  );
-
-  let populars = await new Promise<{ data: Type[] }>(
-    (res) => res(axios.get<Type[]>('/products?limit=8&order=random'))
-  );
-
-  let services = await new Promise<{ data: Type[] }>(
-    (res) => res(axios.get<Type[]>('/services?limit=3&order=random'))
-  );
+  let highlights = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/products?limit=5&order=random')));
+  let populars = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/products?limit=8&order=random')));
+  let services = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/services?limit=3&order=random')));
 
   return {highlights, populars, services};
 }
 
 export default function Page({loaderData}: Route.ComponentProps) {
-  let {highlights, populars, services} = loaderData;
-
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searched = ['torno', 'furadeira', 'maqden', 'mecanico'];
 
-  const debouncedSearch = useDebouncedCallback((value) => navigate(`/pesquisar?q=${encodeURIComponent(value)}`), 500);
+  const debouncedSearch = useDebouncedCallback((value) => navigate(`/pesquisar?q=${encodeURIComponent(value)}`), 300);
 
   useEffect(() => {
-    const q = searchParams.get('q') || '';
-
-    if (q) {
-      debouncedSearch(q);
+    if (searchParams.has('q')) {
+      debouncedSearch(searchParams.get('q'))
     }
   }, [searchParams, debouncedSearch]);
 
   return (
     <>
-      <Section className="items-center justify-center py-0 h-[65dvh]">
+      <Section className="items-center justify-end py-0 h-[45dvh] xl:justify-center xl:h-[65dvh] xl:scale-115">
         <SectionContent className="items-center justify-center gap-2">
-          <div className="text-center mx-auto max-w-md md:max-w-2xl xl:max-w-5xl">
+          <div className="text-center mx-auto max-w-md md:max-w-2xl xl:max-w-5xl xl:mt-24">
             <h1 className="font-extrabold text-4xl md:text-5xl xl:text-7xl">A forma <b className="text-primary">mais fácil</b> de encontrar o equipamento que sua empresa precisa.</h1>
           </div>
 
@@ -76,7 +64,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Destaques" title="Os mais acessados da semana"/>
 
           <div className="grid space grid-cols-12">
-            {highlights?.data.map((record: Type, i) => (
+            {loaderData.highlights?.data.map((record: Type, i) => (
               <Thumbnail
                 key={i}
                 src={record.cover}
@@ -95,7 +83,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Populares" title="Os mais acessados da semana"/>
 
           <div className="grid space grid-cols-4 max-xl:grid-cols-1">
-            {populars?.data.map((record: Type, i) => (
+            {loaderData.populars?.data.map((record: Type, i) => (
               <Thumbnail
                 key={i}
                 src={record.cover}
@@ -115,7 +103,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Serviços" title="Encontre Profissionais"/>
 
           <div className="grid grid-cols-3 space max-lg:grid-cols-1">
-            {services?.data.map((record: Type, i) => (
+            {loaderData.services?.data.map((record: Type, i) => (
               <Thumbnail key={i} src={record.cover} alt={record.title} target={record.target} className="aspect-square"/>
             ))}
           </div>

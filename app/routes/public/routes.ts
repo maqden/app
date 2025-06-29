@@ -5,4 +5,8 @@ export default layout('routes/public/layout.tsx', [
   route('precos', 'routes/public/prices/page.tsx'),
   route('pesquisar', 'routes/public/search/page.tsx'),
   route('perguntas-frequentes', 'routes/public/faq/page.tsx'),
+
+  route(":account", "routes/public/account/page.tsx", [
+    route(":showcase", "routes/public/showcase/page.tsx"),
+  ]),
 ]);

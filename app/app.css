@@ -190,7 +190,7 @@
 }
 
 @utility space {
-    @apply gap-8 max-lg:gap-4;
+    @apply gap-4 xl:gap-4;
 }
 
 @utility clickable {
