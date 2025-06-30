@@ -1,51 +1,72 @@
 import {Section, SectionContent} from "~/components/public/section";
-import {Avatar, AvatarFallback, AvatarImage} from "~/components/ui/avatar";
-import type {Thumbnail as Type} from "~/models";
+import type {User} from "~/models";
 import axios from "~/lib/axios";
 import type {Route} from "./+types/page";
-import Thumbnail from "~/components/public/thumbnail";
 import React from "react";
+import {Avatar, AvatarFallback, AvatarImage} from "~/components/ui/avatar";
+import {useInitials} from "~/hooks/use-initials";
+import {Link, Outlet} from "react-router";
+import {MapPin, Phone} from "lucide-react";
 
-export async function loader() {
-  let products = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/products?limit=15&order=random')));
+export async function loader({params}: Route.LoaderArgs) {
+  const response = await axios.get<User>(`/${params.account}`);
+  const user = response.data;
 
-  return {products};
+  return {user};
 }
 
 export default function Page({loaderData}: Route.ComponentProps) {
+  const getInitials = useInitials();
+
   return (
-    <>
-      <Section className="!pt-4 !xl:pt-8">
-        <SectionContent>
-          <div className="flex items-center justify-center mx-auto gap-8 px-12 py-8">
-            <Avatar className="size-36">
-              <AvatarImage src="/images/maqden.jpg"/>
-              <AvatarFallback>US</AvatarFallback>
-            </Avatar>
+    <Section>
+      <SectionContent className="items-start justify-center xl:flex-row-reverse xl:gap-12">
+        <div className="basis-full">
+          <Outlet />
+        </div>
 
-            <div className="space-y-4">
-              <div>
-                <h1 className="text-2xl font-title font-bold tracking-tight line-clamp-1">MAQDEN Comércio de Máquinas</h1>
-                <p className="opacity-50">@maqden</p>
-              </div>
+        <div className="flex flex-col space items-center justify-center basis-1/3">
+          <Avatar className="size-36">
+            <AvatarImage src={loaderData.user.avatar}/>
+            <AvatarFallback>{getInitials(loaderData.user.name)}</AvatarFallback>
+          </Avatar>
 
-              <p>Nulla vitae elit iaculis, mattis enim et, laoreet urna. Integer pulvinar et sem vel malesuada. Donec libero nisl, volutpat ac tortor id, porttitor tristique eros. Integer at sodales arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce dolor mi, aliquet eu elementum eu, consectetur sed est. Sed eget sagittis nulla. Donec mollis tempor nunc sed rhoncus. Aenean mattis tempus fringilla. Sed nec eros et est molestie iaculis at eget neque. Etiam sit amet odio eu orci lobortis tempor sit amet non eros. Nulla faucibus tempus metus vel suscipit.</p>
-            </div>
+          <div className="text-center">
+            <h1 className="font-title font-bold text-2xl">{loaderData.user.name}</h1>
+            <Link to={`/${loaderData.user.account}`} className="link">@{loaderData.user.account}</Link>
           </div>
 
-          <div className="grid grid-cols-1 space xl:grid-cols-3">
-            {loaderData.products?.data.map((record: Type, i) => (
-              <Thumbnail
-                key={i}
-                src={record.cover}
-                alt={record.title}
-                target={record.target}
-                caption={record.description}
-              />
-            ))}
+          <p className="max-w-lg text-center">{loaderData.user.bio}</p>
+
+          <div className="flex space justify-center">
+            <MapPin className="size-6 stroke-2" />
+            <Phone className="size-6 stroke-2" />
+            <MapPin className="size-6 stroke-2" />
+            <Phone className="size-6 stroke-2" />
           </div>
-        </SectionContent>
-      </Section>
-    </>
+        </div>
+      </SectionContent>
+    </Section>
   );
 }
+
+// <Section className="!pt-4 !xl:pt-8">
+//   <SectionContent className="items-start justify-center xl:flex-row gap-8">
+//     <div className="flex flex-col items-center justify-center text-center max-w-sm xl:flex-row">
+//       <div className="flex flex-col items-center justify-center gap-4">
+
+//
+//         <div>
+//           <h1 className="text-2xl font-title font-bold tracking-tight line-clamp-1">{loaderData.user.name}</h1>
+//           <Link to={`/${loaderData.user.account}`} className="link">@{loaderData.user.account}</Link>
+//         </div>
+//
+//         <p>{loaderData.user.bio}</p>
+//       </div>
+//     </div>
+//
+//     <div className="flex-1 space-y-8">
+//
+//     </div>
+//   </SectionContent>
+// </Section>

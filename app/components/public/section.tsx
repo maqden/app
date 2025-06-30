@@ -3,7 +3,7 @@ import {cn} from "~/lib/utils";
 
 const Section = ({children, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) => {
   return (
-    <section className={cn('flex flex-col py-24 xl:py-32', props.className)}>
+    <section className={cn('flex flex-col py-24 xl:py-32 first:pt-4 first:xl:pt-8', props.className)}>
       {children}
     </section>
   )

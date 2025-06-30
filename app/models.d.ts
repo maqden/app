@@ -5,6 +5,7 @@ export interface User {
   email: string;
   bio: string;
   avatar: string;
+  cover: string;
   products?: Thumbnail[];
   services?: Thumbnail[];
 }
