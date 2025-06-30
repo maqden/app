@@ -34,7 +34,7 @@ function Textarea({className, ...props}: React.ComponentProps<"textarea">) {
       ref={textareaRef}
       data-slot="textarea"
       className={cn(
-        "flex min-h-[150px] w-full overflow-hidden resize-none rounded-lg bg-input text-lg text-input-foreground px-4 py-2.5 font-bold ring-offset-input file:border-0 file:bg-transparent file:text-sm file:text-foreground placeholder:text-input-muted focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "flex min-h-[150px] w-full overflow-hidden resize-none rounded-lg bg-input text-lg text-input-foreground px-4 py-2.5 font-bold ring-offset-input file:border-0 file:bg-transparent file:text-sm file:text-foreground placeholder:text-input-muted focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       onInput={adjustHeight}

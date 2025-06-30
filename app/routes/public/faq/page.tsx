@@ -11,7 +11,7 @@ import type {Faq as Model} from "~/models";
 import axios from "~/lib/axios";
 
 export async function loader() {
-  let faq = await new Promise<{ data: Model[] }>((res) => res(axios.get<Model[]>('/faq')));
+  let faq = await new Promise<{ data: Model[] }>((res) => res(axios.get<Model[]>('/faqs')));
 
   return {faq: faq.data};
 }
