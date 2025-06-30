@@ -1,24 +1,16 @@
 import {Section, SectionContent} from "~/components/public/section";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "~/components/ui/tabs"
 import Price from "~/components/public/price";
-import type {Route} from "./+types/page";
+import type {Price as Model} from "~/models";
+import axios from "~/lib/axios";
 
 export async function loader() {
-  return {
-    products: [
-      {name: 'Básico', description: 'O Plano Básico é perfeito para quem deseja anúnciar sua máquina de forma prática e eficiente.', amount: 4990, order: 1, features: ['1 Anúncio', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
-      {name: 'Revenda', description: 'O Plano Revenda é perfeito para quem deseja anunciar até 50 máquinas.', amount: 9990, order: 2, features: ['Até 50 anúncios', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: true}},
-      {name: 'Ilimitado', description: 'O Plano ilimitado é perfeito para quem tem um alto volume de máquinas para negociação.', amount: 34990, order: 3, features: ['Anúncios ilimitados', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
-    ],
-    services: [
-      {name: 'Único', description: 'O Plano Único é perfeito para quem deseja anúnciar seu serviço de forma prática e eficiente.', amount: 1990, order: 1, features: ['1 Anúncio', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
-      {name: 'Empreendedor', description: 'O Plano Empreendedor é perfeito para quem deseja anunciar até 10 serviços.', amount: 3990, order: 2, features: ['Até 50 anúncios', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: true}},
-      {name: 'Ilimitado', description: 'O Plano ilimitado é perfeito para quem tem presta um alto número de serviços para o público.', amount: 8990, order: 3, features: ['Anúncios ilimitados', 'Participação da newsletter', 'Marketing social', 'Relatórios desempenho'], settings: {popular: false}},
-    ],
-  };
+  let prices = await new Promise<{ data: Model[] }>((res) => res(axios.get<Model[]>('/prices')));
+
+  return { prices: prices.data };
 }
 
-export default function Page({loaderData}: Route.ComponentProps) {
+export default function Page({loaderData}: { loaderData: { prices: Model[] } }) {
   return (
     <Section className="!pt-16">
       <SectionContent className="flex flex-col items-center justify-center">
@@ -38,10 +30,10 @@ export default function Page({loaderData}: Route.ComponentProps) {
           </TabsList>
 
           <TabsContent value="product" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {loaderData.products.map((product, i) => <Price price={product} key={`product-price-${i}`}/>)}
+            {loaderData.prices.filter(price => price.type === 'product').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
           </TabsContent>
           <TabsContent value="service" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {loaderData.services.map((service, i) => <Price price={service} key={`service-price-${i}`}/>)}
+            {loaderData.prices.filter(price => price.type === 'service').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
           </TabsContent>
         </Tabs>
 

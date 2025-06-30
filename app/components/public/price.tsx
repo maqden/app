@@ -3,8 +3,9 @@ import {useCurrency} from "~/hooks/use-currency";
 import {Card, CardContent} from "~/components/ui/card";
 import {Badge} from "~/components/ui/badge";
 import {Button} from "~/components/ui/button";
+import type {Price as Model} from "~/models";
 
-const Price = ({price}: { price: { name: string; amount: number; settings: { popular: boolean }; description: string; features: string[] } }) => {
+const Price = ({price}: { price: Model }) => {
   const getCurrency = useCurrency();
 
   return (
@@ -17,7 +18,7 @@ const Price = ({price}: { price: { name: string; amount: number; settings: { pop
 
         <div className="space-y-4">
           <p className="flex items-baseline gap-2">
-            <span className="text-foreground font-title text-6xl font-semibold tracking-tighter">R$ {getCurrency(price.amount)}</span>
+            <span className="text-foreground font-title text-6xl font-semibold tracking-tighter">R$ {getCurrency(price.price)}</span>
             <span className="text-muted-foreground text-sm font-medium opacity-50">/ mês</span>
           </p>
 
