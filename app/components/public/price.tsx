@@ -3,7 +3,7 @@ import {useCurrency} from "~/hooks/use-currency";
 import {Card, CardContent} from "~/components/ui/card";
 import {Badge} from "~/components/ui/badge";
 import {Button} from "~/components/ui/button";
-import type {Price as Model} from "~/models";
+import type {Price as Model} from "~/services/others-service";
 
 const Price = ({price}: { price: Model }) => {
   const getCurrency = useCurrency();

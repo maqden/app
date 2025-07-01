@@ -1,16 +1,18 @@
 import {Section, SectionContent} from "~/components/public/section";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "~/components/ui/tabs"
 import Price from "~/components/public/price";
-import type {Price as Model} from "~/models";
-import axios from "~/lib/axios";
+import {useLoaderData} from "react-router";
+import {othersService} from "~/services/others-service";
 
 export async function loader() {
-  let prices = await new Promise<{ data: Model[] }>((res) => res(axios.get<Model[]>('/prices')));
+  const prices = await othersService.prices();
 
-  return { prices: prices.data };
+  return {prices};
 }
 
-export default function Page({loaderData}: { loaderData: { prices: Model[] } }) {
+export default function Page() {
+  const {prices} = useLoaderData<typeof loader>();
+
   return (
     <Section className="!pt-16">
       <SectionContent className="flex flex-col items-center justify-center">
@@ -30,10 +32,10 @@ export default function Page({loaderData}: { loaderData: { prices: Model[] } }) 
           </TabsList>
 
           <TabsContent value="product" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {loaderData.prices.filter(price => price.type === 'product').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
+            {prices.filter(price => price.type === 'product').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
           </TabsContent>
           <TabsContent value="service" className="flex flex-col space items-stretch justify-center py-8 xl:flex-row">
-            {loaderData.prices.filter(price => price.type === 'service').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
+            {prices.filter(price => price.type === 'service').map((record, i) => <Price price={record} key={`price-${i}`}/>)}
           </TabsContent>
         </Tabs>
 

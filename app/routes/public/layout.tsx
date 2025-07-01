@@ -9,14 +9,14 @@ const Layout = () => {
 
   return (
     <>
-      <div className="absolute inset-0 bg-[url(/images/hero.svg)] bg-[length:300%_auto] xl:bg-[length:100%_auto] lg:bg-[length:110%_auto] bg-top bg-no-repeat -z-100"/>
-      <div className="absolute inset-0 bg-gradient-to-b from-background to-transparent -z-99"/>
+      <div className="absolute inset-0 bg-[url(/images/hero.svg)] bg-[length:300%_auto] xl:bg-[length:100%_auto] lg:bg-[length:110%_auto] bg-top bg-no-repeat -z-90"/>
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-transparent backdrop-blur-xs -z-80"/>
 
       <header
         className={cn('sticky top-0 z-40 transition-all duration-500', {
           'translate-y-0': showHeader,
           '-translate-y-full': !showHeader,
-          'backdrop-blur backdrop-brightness-115': scrolled,
+          'backdrop-blur-lg': scrolled,
         })}
       >
         <div className="container flex items-center justify-between mx-auto p-4 xl:px-0 xl:py-8">

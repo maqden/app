@@ -1,30 +1,37 @@
 import React, {useEffect} from "react";
-import type {Route} from "./+types/page";
 import NewsletterSection from "~/components/public/newsletter-section";
 import {Section, SectionContent, SectionTitle} from "~/components/public/section";
 import Thumbnail from "~/components/public/thumbnail";
 import InputSearch from "~/components/public/input-search";
-import {Link, useNavigate, useSearchParams} from "react-router";
+import {Link, useLoaderData, useNavigate, useSearchParams} from "react-router";
 import {Divider} from "~/components/ui/divider";
 import {Search} from "lucide-react";
-import axios from "~/lib/axios";
-import type {Thumbnail as Type} from "~/models";
+import {othersService, type Thumbnail as Type} from "~/services/others-service";
 import {useDebouncedCallback} from "use-debounce";
+import type { Route } from "./+types/page";
 
-export async function loader() {
-  let highlights = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/products?limit=5&order=random')));
-  let populars = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/products?limit=8&order=random')));
-  let services = await new Promise<{ data: Type[] }>((res) => res(axios.get<Type[]>('/services?limit=3&order=random')));
-
-  return {highlights, populars, services};
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Soluções Industriais e Equipamentos" },
+    { name: "description", content: "Procurando máquinas e equipamentos industriais de alta performance? A Maqden tem o que você precisa. Clique e confira nosso catálogo!" },
+  ];
 }
 
-export default function Page({loaderData}: Route.ComponentProps) {
+export async function loader() {
+  const highlights = await othersService.highlights('product');
+  const services = await othersService.highlights('service');
+  const popular = await othersService.popular();
+
+  return {highlights, services, popular};
+}
+
+export default function Page() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searched = ['torno', 'furadeira', 'maqden', 'mecanico'];
+  const {highlights, services, popular} = useLoaderData<typeof loader>();
 
-  const debouncedSearch = useDebouncedCallback((value) => navigate(`/pesquisar?q=${encodeURIComponent(value)}`), 300);
+  const debouncedSearch = useDebouncedCallback((value) => navigate(`/pesquisar?q=${encodeURIComponent(value)}`), 150);
 
   useEffect(() => {
     if (searchParams.has('q')) {
@@ -36,7 +43,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
     <>
       <Section className="items-center justify-end py-0 h-[45dvh] xl:justify-center xl:h-[65dvh] xl:scale-115">
         <SectionContent className="items-center justify-center gap-2">
-          <div className="text-center mx-auto max-w-md md:max-w-2xl xl:max-w-5xl xl:mt-24">
+          <div className="text-center mx-auto max-w-md md:max-w-2xl xl:max-w-5xl xl:mt-36">
             <h1 className="font-extrabold text-4xl md:text-5xl xl:text-7xl">A forma <b className="text-primary">mais fácil</b> de encontrar o equipamento que sua empresa precisa.</h1>
           </div>
 
@@ -61,10 +68,10 @@ export default function Page({loaderData}: Route.ComponentProps) {
 
       <Section>
         <SectionContent>
-          <SectionTitle small="Destaques" title="Os mais acessados da semana"/>
+          <SectionTitle small="Seleção do Dia" title="Confira nossos destaques"/>
 
           <div className="grid space grid-cols-12">
-            {loaderData.highlights?.data.map((record: Type, i) => (
+            {highlights?.map((record: Type, i) => (
               <Thumbnail
                 key={i}
                 src={record.cover}
@@ -83,7 +90,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Populares" title="Os mais acessados da semana"/>
 
           <div className="grid space grid-cols-4 max-xl:grid-cols-1">
-            {loaderData.populars?.data.map((record: Type, i) => (
+            {popular?.map((record: Type, i) => (
               <Thumbnail
                 key={i}
                 src={record.cover}
@@ -103,7 +110,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <SectionTitle small="Serviços" title="Encontre Profissionais"/>
 
           <div className="grid grid-cols-3 space max-lg:grid-cols-1">
-            {loaderData.services?.data.map((record: Type, i) => (
+            {services?.map((record: Type, i) => (
               <Thumbnail key={i} src={record.cover} alt={record.title} target={record.target} className="aspect-square"/>
             ))}
           </div>

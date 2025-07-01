@@ -1,4 +1,3 @@
-import type {Route} from "./+types/page";
 import {Section, SectionContent} from "~/components/public/section";
 import NewsletterSection from "~/components/public/newsletter-section";
 import {Card, CardContent} from "~/components/ui/card";
@@ -7,16 +6,18 @@ import {Label} from "~/components/ui/label";
 import {Input} from "~/components/ui/input";
 import {Textarea} from "~/components/ui/textarea";
 import {Button} from "~/components/ui/button";
-import type {Faq as Model} from "~/models";
-import axios from "~/lib/axios";
+import {othersService} from "~/services/others-service";
+import {useLoaderData} from "react-router";
 
 export async function loader() {
-  let faq = await new Promise<{ data: Model[] }>((res) => res(axios.get<Model[]>('/faqs')));
+  const faqs = await othersService.faqs();
 
-  return {faq: faq.data};
+  return {faqs};
 }
 
-export default function Page({loaderData}: Route.ComponentProps) {
+export default function Page() {
+  const {faqs} = useLoaderData<typeof loader>();
+
   return (
     <>
       <Section className="!pt-16">
@@ -33,7 +34,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <Card className="mx-auto w-full max-w-5xl px-6">
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
-                {loaderData.faq.map((record, i) => (
+                {faqs.map((record, i) => (
                   <AccordionItem key={`item-${i}`} value={`item-${i}`}>
                     <AccordionTrigger className="font-hero text-lg xl:text-2xl font-bold cursor-pointer">{record.question}</AccordionTrigger>
                     <AccordionContent className="text-lg leading-relaxed font-medium tracking-wide">{record.answer}</AccordionContent>

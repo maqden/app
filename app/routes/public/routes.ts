@@ -6,8 +6,5 @@ export default layout('routes/public/layout.tsx', [
   route('pesquisar', 'routes/public/search/page.tsx'),
   route('perguntas-frequentes', 'routes/public/faq/page.tsx'),
 
-  route(":account", "routes/public/account/page.tsx", [
-    index('routes/public/account/list.tsx'),
-    route(":showcase", "routes/public/account/showcase.tsx"),
-  ]),
+  route(":account", "routes/public/account/page.tsx"),
 ]);

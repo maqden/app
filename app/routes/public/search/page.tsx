@@ -1,24 +1,23 @@
 import type {Route} from "./+types/page";
 import React, {useEffect} from "react";
-import {useNavigate, useSearchParams} from "react-router";
+import {useLoaderData, useNavigate, useSearchParams} from "react-router";
 import {Section, SectionContent} from "~/components/public/section";
 import InputSearch from "~/components/public/input-search";
 import Thumbnail from "~/components/public/thumbnail";
-import type {Thumbnail as Type} from "~/models";
-import axios from "~/lib/axios";
+import {othersService} from "~/services/others-service";
 
 export async function loader({request}: Route.LoaderArgs) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('q') ?? '';
+  const {searchParams} = new URL(request.url);
 
-  const results = await axios.get<Type[]>(`/search?q=${encodeURIComponent(query)}`);
+  const result = await othersService.search(searchParams.get('q') ?? '');
 
-  return results.data;
+  return {result};
 }
 
-export default function Page({loaderData}: Route.ComponentProps) {
+export default function Page() {
   const navigate = useNavigate();
   let [searchParams] = useSearchParams();
+  const {result} = useLoaderData<typeof loader>();
 
   useEffect(() => {
     let query = searchParams.get('q') ?? null;
@@ -39,7 +38,7 @@ export default function Page({loaderData}: Route.ComponentProps) {
           <h1 className="text-center text-lg">Resultados de pesquisa para: <b className="text-primary brightness-75">{searchParams.get('q') ?? ''}</b></h1>
 
           <div className="grid grid-cols-3 space max-lg:grid-cols-1">
-            {loaderData?.map((record, i) => (
+            {result?.map((record, i) => (
               <Thumbnail
                 key={i}
                 src={record.cover}

@@ -1,7 +1,33 @@
-import LoginForm from "~/components/auth/login-form";
-import {Link} from "react-router";
+import React from "react";
+import {Form, Link, redirect, useActionData} from "react-router";
+import type {Route} from "./+types/page";
+import {Button} from "~/components/ui/button";
+import {Divider} from "~/components/ui/divider";
+import {Alert, AlertDescription} from "~/components/ui/alert";
+import {Label} from "~/components/ui/label";
+import {Input} from "~/components/ui/input";
+import {Checkbox} from "~/components/ui/checkbox";
+import {authService} from "~/services/auth-service";
+
+export async function action({request}: Route.ActionArgs) {
+  const formData = await request.formData();
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  try {
+    await authService.login({email: email, password: password});
+
+    return redirect('/dashboard');
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : 'Erro no login'
+    };
+  }
+}
 
 export default function Page() {
+  const actionData = useActionData<typeof action>();
+
   return (
     <div className="space-y-8">
       <div>
@@ -9,7 +35,45 @@ export default function Page() {
         <p className="sub-title">Clique no botão abaixo ou informe seus dados nos campos abaixo para ter acesso a sua conta!</p>
       </div>
 
-      <LoginForm/>
+      <Button variant="outline" size="sm" className="w-full" asChild>
+        <a href="/login-with-google" className="flex items-center justify-center gap-1">
+          <img src="/images/google.svg" alt="Google" className="size-5"/>
+          acessar com o Goggle
+        </a>
+      </Button>
+
+      <Divider text="ou" className="max-w-xs"/>
+
+      <Form method="post" className="space-y-4">
+        {actionData?.error.length && (
+          <Alert variant="destructive">
+            <AlertDescription>Não foi possível efetuar o acesso com as credênciais informadas.</AlertDescription>
+          </Alert>
+        )}
+
+        <div>
+          <Label children="Endereço de e-mail"/>
+          <Input name="email" tabIndex={1} placeholder="email@dominio.com.br"/>
+        </div>
+
+        <div>
+          <Label children="Senha de acesso"/>
+          <Input name="password" type="password" tabIndex={2} placeholder="Senha de acesso"/>
+        </div>
+
+        <div className="flex items-center justify-between py-1 text-sm text-muted-foreground">
+          <label className="flex items-center gap-x-1.5">
+            <Checkbox name="remember"/>
+            <span className="cursor-pointer select-none">Lembrar senha</span>
+          </label>
+
+          <Link to="/recuperar-senha" className="link">Esqueceu sua senha?</Link>
+        </div>
+
+        <div>
+          <Button className="w-full">Acessar minha conta</Button>
+        </div>
+      </Form>
 
       <div className="flex flex-col items-center max-w-sm space-y-2 text-muted-foreground">
         <p className="text-md space-x-2 text-center font-bold">
