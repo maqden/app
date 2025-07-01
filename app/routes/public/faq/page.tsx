@@ -7,12 +7,20 @@ import {Input} from "~/components/ui/input";
 import {Textarea} from "~/components/ui/textarea";
 import {Button} from "~/components/ui/button";
 import {othersService} from "~/services/others-service";
-import {useLoaderData} from "react-router";
+import {Form, useLoaderData} from "react-router";
+import type {Route} from "./+types/page";
 
 export async function loader() {
   const faqs = await othersService.faqs();
 
   return {faqs};
+}
+
+export async function action({request}: Route.ActionArgs) {
+  const formData = await request.formData();
+  console.log(formData);
+
+  await othersService.getInTouch()
 }
 
 export default function Page() {
@@ -57,20 +65,20 @@ export default function Page() {
                 <p className="text-muted-foreground leading-relaxed font-bold">Preencha as informações abaixo para entrar em contato diretamente com nossa equipe de suporte!</p>
               </article>
 
-              <form className="space-y-4">
+              <Form method="POST" className="space-y-4">
                 <div className="space-y-2">
                   <Label children="Nome"/>
-                  <Input tabIndex={1} placeholder="Nome completo"/>
+                  <Input name="name" tabIndex={1} placeholder="Nome completo"/>
                 </div>
 
                 <div>
                   <Label children="Endereço de Email"/>
-                  <Input tabIndex={2} placeholder="email@dominio.com.br"/>
+                  <Input name="email" tabIndex={2} placeholder="email@dominio.com.br"/>
                 </div>
 
                 <div>
                   <Label children="Mensagem"/>
-                  <Textarea tabIndex={3} placeholder="Qual a sua dúvida?"/>
+                  <Textarea name="question" tabIndex={3} placeholder="Qual a sua dúvida?"/>
                 </div>
 
                 <div className="pt-4">
@@ -78,7 +86,7 @@ export default function Page() {
                     Enviar minha dúvida
                   </Button>
                 </div>
-              </form>
+              </Form>
 
               <p className="text-muted-foreground py-1 text-center text-sm">Qualquer envio de spam por este canal será descartado.</p>
             </div>

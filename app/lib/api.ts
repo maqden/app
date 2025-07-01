@@ -7,6 +7,7 @@ class Api {
     this.defaultHeaders = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
     };
   }
 
@@ -35,7 +36,7 @@ class Api {
 
     return this.request(endpoint, {
       method: 'POST',
-      body,
+      body: body,
       headers: {
         ...headers,
         ...options?.headers,
@@ -65,7 +66,6 @@ class Api {
     return response.json();
   }
 
-  // Extrai mensagens de erro das responses
   private async extractError(response: Response): Promise<string> {
     try {
       const errorData = await response.json();
@@ -82,9 +82,7 @@ class Api {
   }
 
   async getCsrfToken(): Promise<void> {
-    await fetch(`${this.baseURL}/sanctum/csrf-cookie`, {
-      credentials: 'include',
-    });
+    await fetch(`${this.baseURL}/sanctum/csrf-cookie`, {credentials: 'include'});
   }
 }
 

@@ -2,7 +2,10 @@ import "./app.css";
 
 import React from "react";
 import type {Route} from "./+types/root";
-import {isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration,} from "react-router";
+import {isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from "react-router";
+
+import {AuthProvider} from "~/contexts/auth-context";
+import {authService} from "~/services/auth-service";
 
 export const links: Route.LinksFunction = () => [
   {rel: "preconnect", href: "https://fonts.googleapis.com"},
@@ -13,7 +16,19 @@ export const links: Route.LinksFunction = () => [
   {rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poetsen+One&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap",},
 ];
 
+export async function loader() {
+  try {
+    const user = await authService.getUser();
+
+    return {user};
+  } catch (error) {
+    return {user: null};
+  }
+}
+
 export function Layout({children}: { children: React.ReactNode }) {
+  const {user} = useLoaderData<typeof loader>();
+
   return (
     <html lang="pt_BR">
     <head>
@@ -23,9 +38,11 @@ export function Layout({children}: { children: React.ReactNode }) {
       <Links/>
     </head>
     <body>
+    <AuthProvider authenticated={user}>
       {children}
-      <ScrollRestoration/>
-      <Scripts/>
+    </AuthProvider>
+    <ScrollRestoration/>
+    <Scripts/>
     </body>
     </html>
   );

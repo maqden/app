@@ -54,6 +54,12 @@ export class OthersService {
 
     return api.json<Faq[]>(response);
   }
+
+  async getInTouch(): Promise<Faq[]> {
+    const response = await api.post('/get-in-touch');
+
+    return api.json<Faq[]>(response);
+  }
 }
 
 export const othersService = new OthersService();

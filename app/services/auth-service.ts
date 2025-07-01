@@ -1,11 +1,11 @@
 import {api} from "~/lib/api";
 
-interface User {
-  id: number;
+export interface User {
   name: string;
   email: string;
   avatar: string;
   bio: string;
+  account: string;
 }
 
 interface LoginCredentials {

@@ -1,9 +1,14 @@
 import {Outlet} from "react-router";
+import type { Route } from "./+types/layout";
+import {requireAuth} from "~/lib/auth";
+
+export async function loader() {
+  await requireAuth();
+}
 
 const Layout = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1>Protected Layout</h1>
       <Outlet/>
     </div>
   )

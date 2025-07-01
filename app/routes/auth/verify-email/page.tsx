@@ -1,7 +1,12 @@
+import React from "react";
 import {Link} from "react-router";
 import {Button} from "~/components/ui/button";
-import React from "react";
 import {Alert, AlertDescription, AlertTitle} from "~/components/ui/alert";
+import {requireAuth} from "~/lib/auth";
+
+export async function loader() {
+  await requireAuth();
+}
 
 export default function Page() {
   const [showStatus, setShowStatus] = React.useState(false);

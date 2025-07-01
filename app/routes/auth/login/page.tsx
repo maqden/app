@@ -7,17 +7,27 @@ import {Alert, AlertDescription} from "~/components/ui/alert";
 import {Label} from "~/components/ui/label";
 import {Input} from "~/components/ui/input";
 import {Checkbox} from "~/components/ui/checkbox";
-import {authService} from "~/services/auth-service";
+import {requireGuest} from "~/lib/auth";
+import {api} from "~/lib/api";
+
+export async function loader() {
+  await requireGuest();
+}
 
 export async function action({request}: Route.ActionArgs) {
   const formData = await request.formData();
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
+  const credentials = Object.fromEntries(formData);
 
   try {
-    await authService.login({email: email, password: password});
+    await api.getCsrfToken();
 
-    return redirect('/dashboard');
+    const response = await api.post('/login', credentials);
+
+    if (!response.ok) {
+      return {error: 'Não foi possível efetuar o acesso com os dados informados.'};
+    }
+
+    return redirect('/painel');
   } catch (error) {
     return {
       error: error instanceof Error ? error.message : 'Erro no login'
@@ -63,7 +73,7 @@ export default function Page() {
 
         <div className="flex items-center justify-between py-1 text-sm text-muted-foreground">
           <label className="flex items-center gap-x-1.5">
-            <Checkbox name="remember"/>
+            <Checkbox name="remember" checked={true}/>
             <span className="cursor-pointer select-none">Lembrar senha</span>
           </label>
 
