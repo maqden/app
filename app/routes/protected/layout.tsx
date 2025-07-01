@@ -1,5 +1,4 @@
 import {Outlet} from "react-router";
-import type { Route } from "./+types/layout";
 import {requireAuth} from "~/lib/auth";
 
 export async function loader() {
